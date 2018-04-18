@@ -1,0 +1,18 @@
+create proc EmployeeAddorEdit
+@Employee_id int,
+@Employee_Name varchar(50),
+@Employee_Designation varchar(50),
+@Age int,
+@Salary int
+As
+
+   IF @Employee_id = 0
+   INSERT INTO Employee2(Employee_Name,Employee_Designation,Age,Salary)
+   Values(@Employee_Name,@Employee_Designation,@Age,@Salary);
+   ELSE
+   UPDATE Employee2
+   SET Employee_Name = @Employee_Name,
+      Employee_Designation = @Employee_Designation,
+	  Age = @Age,
+	  Salary = @Salary
+	  where Employee_id = @Employee_id;

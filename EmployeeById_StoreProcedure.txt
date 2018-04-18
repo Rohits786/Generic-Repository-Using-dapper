@@ -1,0 +1,5 @@
+
+create proc EmployeeById
+@Employee_id int
+AS
+   Select * from Employee where Employee_id = @Employee_id;

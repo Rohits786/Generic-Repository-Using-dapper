@@ -1,0 +1,89 @@
+ public class EmployeeController : Controller
+    {
+        // GET: Employee
+        public IGenericRepo<NewEmployeeRepository> interfaceobj;
+        public EmployeeController()
+        {
+            interfaceobj = new GenericRepo<NewEmployeeRepository>();
+        }
+        public ActionResult Index()
+        {
+
+            return View(interfaceobj.GetALL());
+        }
+
+        // GET: Employee/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: Employee/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Employee/Create
+        [HttpPost]
+        public ActionResult Create(NewEmployeeRepository collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                interfaceobj.InsertModel(collection);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Employee/Edit/5
+        public ActionResult Edit(NewEmployeeRepository id)
+        {
+            NewEmployeeRepository emp = interfaceobj.GetByID(id);
+            return View(emp);
+        }
+
+        // POST: Employee/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, NewEmployeeRepository collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                interfaceobj.UpdateModel(collection);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Employee/Delete/5
+        public ActionResult Delete(NewEmployeeRepository id)
+        {
+            NewEmployeeRepository emp = interfaceobj.GetByID(id);
+            return View(emp);
+        }
+
+        // POST: Employee/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, NewEmployeeRepository collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                interfaceobj.DeleteModel(id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+    }
+}

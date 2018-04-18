@@ -1,0 +1,8 @@
+{
+        IEnumerable<TEntity> GetALL();
+        TEntity GetByID(TEntity modelId);
+        void InsertModel(TEntity model);
+        void DeleteModel(int modelID);
+        void UpdateModel(TEntity model);
+    }
+}

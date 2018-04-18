@@ -1,0 +1,50 @@
+ public static class DapperORM
+    {
+        private static string _connectionString = @"Data Source = BMH1021787\SQLEXPRESS;Initial Catalog = DapperDb;Integrated Security =True;";
+
+        public static void ExecuteWithoutReturn(string procedureName, DynamicParameters param=null)
+        {
+            ///<summary>
+            ///Method ExecuteWithoutReturn has no return type, this method is used to open SQL Connection and
+            ///Execute Stored Procedure according to need, this has been made for using delete
+            /// and update operation on the database.
+            ///</summary>
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    conn.Execute(procedureName, param, commandType: CommandType.StoredProcedure);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public static T ExecuteReturnScalar<T>(string procedureName, DynamicParameters param=null)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+               return (T)Convert.ChangeType(conn.Execute(procedureName, param, commandType: CommandType.StoredProcedure),typeof(T));
+
+            }
+        }
+
+
+        public static IEnumerable<T> ReturnList<T>(string procedureName, DynamicParameters param=null)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                return conn.Query<T>(procedureName, param, commandType: CommandType.StoredProcedure);
+
+            }
+        }
+    }
+}

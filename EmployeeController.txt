@@ -1,0 +1,41 @@
+ // GET: Employee
+        public ActionResult Index()
+        {
+            return View(DapperORM.ReturnList<EmployeeModel>("EmployeeViewAll"));
+        }
+
+        [HttpGet]
+        public ActionResult AddorEdit(int id = 0)
+        {
+            if (id == 0)
+                return View();
+            else
+            {
+                DynamicParameters param = new DynamicParameters();
+                param.Add("@Employee_id", id);
+                return View(DapperORM.ReturnList<EmployeeModel>("EmployeeById", param).FirstOrDefault<EmployeeModel>());
+            }
+        }
+        [HttpPost]
+        public ActionResult AddorEdit(EmployeeModel emp)
+        {
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@Employee_id", emp.Employee_id);
+            param.Add("@Employee_Name", emp.Employee_Name);
+            param.Add("@Employee_Designation", emp.Employee_Designation);
+            param.Add("@Age", emp.Age);
+            param.Add("@Salary", emp.Salary);
+
+            DapperORM.ExecuteWithoutReturn("EmployeeAddorEdit", param);
+            return RedirectToAction("index");
+        }
+
+        public ActionResult DeleteById(int id)
+        {
+            DynamicParameters param = new DynamicParameters();
+            param.Add("@Employee_id", id);
+            DapperORM.ExecuteWithoutReturn("EmployeeDeleteById", param);
+            return RedirectToAction("index");
+        }
+    }
+}

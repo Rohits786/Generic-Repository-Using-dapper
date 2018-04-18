@@ -1,0 +1,27 @@
+ public int Employee_id { get; set; }
+        public string Employee_Name { get; set; }
+        public int Employee_Salary { get; set; }
+        public int Employee_Age { get; set; }
+		
+		
+		   public int Department_id { get; set; }
+        public string Department_Name { get; set; }
+        public string Department_Category { get; set; }
+        public string Department_Work { get; set; }
+    }
+	
+	
+	
+	 IEnumerable<TEntity> GetModel();
+        TEntity GetModelByID(int modelId);
+        void InsertModel(TEntity model);
+        void DeleteModel(int modelID);
+        void UpdateModel(TEntity model);
+		
+		
+		
+		
+		
+		   
+        private IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["RepoConnection"].ConnectionString);
+        public DPGenericRepository<TEntity> dbentity;

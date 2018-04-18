@@ -1,0 +1,156 @@
+ public class GenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : class
+    {
+        //public SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["RepoConnection"].ConnectionString);
+
+        private static string _connectionString = @"Data Source=BMH1021787\SQLEXPRESS;Initial Catalog=DBRepository;Integrated Security=True;";
+
+
+
+
+        public void DeleteModel(int modelID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+
+                    conn.Open();
+
+                    var dbentity = new DPGenericRepository<TEntity>(conn);
+                   // TEntity model = dbentity.Find(modelID);
+                    object pk = new { Employee_id = modelID };
+                    dbentity.Remove(pk);
+
+
+                }
+            }
+            catch (SqlException ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public IEnumerable<TEntity> GetALL()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                { 
+
+                       conn.Open();
+
+                    var dbentity = new DPGenericRepository<TEntity>(conn);
+                    return dbentity.All();
+
+
+                }
+            }
+            catch (SqlException ex)
+            {
+
+                throw ex;
+            }
+        }
+        NewEmployeeRepository bb = new NewEmployeeRepository();
+        
+        public TEntity GetByID(int modelId)
+        {
+            //var pkId = bb.Employee_id;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+
+                    conn.Open();
+
+                    var dbentity = new DPGenericRepository<TEntity>(conn);
+                    object pk = new { Employee_id = modelId };
+                    return dbentity.Find(pk);
+
+
+
+                }
+            }
+            catch (ArgumentException ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+
+        // NewEmployeeRepository modelId = new NewEmployeeRepository();
+      /*  public TEntity GetByID(NewEmployeeRepository modelId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+
+                    conn.Open();
+
+                    var dbentity = new DPGenericRepository<TEntity>(conn);
+                    return dbentity.Find(modelId.Employee_id);
+
+
+                }
+            }
+            catch (SqlException ex)
+            {
+
+                throw ex;
+            }
+        }*/
+
+        public void InsertModel(TEntity model)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+
+                    conn.Open();
+
+                    var dbentity = new DPGenericRepository<TEntity>(conn);
+                    dbentity.Add(model);
+
+
+                }
+            }
+            catch (SqlException ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void UpdateModel(TEntity model)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+
+                    conn.Open();
+
+                    var dbentity = new DPGenericRepository<TEntity>(conn);
+                     NewEmployeeRepository emp = new NewEmployeeRepository();
+                    object key = new { Employee_id = emp.Employee_id};
+                    var model1 = dbentity.Find(key);
+
+
+                    dbentity.Update(model1, key);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+        }
+    }
+}

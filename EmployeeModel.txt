@@ -1,0 +1,11 @@
+public class EmployeeModel
+    {
+        /// <summary>
+        /// Parameters associated with Employee and Columns of Table employee in database.
+        /// </summary>
+        public int Employee_id { get; set; }
+        public string Employee_Name { get; set; }
+        public string Employee_Designation { get; set; }
+        public int Age { get; set; }
+        public int Salary { get; set; }
+    }
